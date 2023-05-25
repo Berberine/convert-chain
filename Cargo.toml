@@ -1,0 +1,17 @@
+[package]
+name = "convert-chain"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "A simple chain converter"
+repository = "https://github.com/Berberine/convert-chain"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+proc-macro2 = "1.0.58"
+quote = "1.0.27"
+syn = "2.0.16"
+
+[lib]
+proc-macro = true
