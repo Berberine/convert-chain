@@ -1,3 +1,9 @@
+//! # `convert-chain`
+//! [![Crates.io](https://img.shields.io/crates/v/convert-chain)](https://crates.io/crates/convert-chain)
+//! [![docs.rs](https://img.shields.io/docsrs/convert-chain)](https://docs.rs/convert-chain)
+//! ![Crates.io](https://img.shields.io/crates/d/convert-chain)
+//! ![Crates.io](https://img.shields.io/crates/l/convert-chain)
+//!
 //! A tiny crate for chain type converter. There is only one macro `convert_chian` in it
 //!
 //! Assuming there are 3 sturct with following relationship.
@@ -14,21 +20,21 @@
 //!
 //! + Directly convert
 //!     ```rust
-//!     let a = A;
-//!     let C = convert_chain!(c; B, C);
+//!     let c = C;
+//!     let a = convert_chain!(c; B, A);
 //!     ```
 //!
 //! + Create a closure
 //!     ```rust
-//!     let a = A;
-//!     let f = convert_chain!(B, C);
-//!     let c = f(C);
+//!     let c = C;
+//!     let f = convert_chain!(B, A);
+//!     let a = f(c);
 //!     ```
 //!
 //! Both of the above methods are equivalent to
 //! ```rust
-//! let a = A;
-//! let c = C::from(B::from(a));
+//! let c = C;
+//! let a = A::from(A::from(c));
 //! ```
 
 use proc_macro2::TokenStream;
@@ -78,7 +84,7 @@ impl ToTokens for ConvertChain {
         let var = self.expr.as_ref().map_or(quote!(input), |expr| expr.to_token_stream());
         tokens.append_all(self.tys.iter().fold(var, |acc, ty| {
             quote! {
-                #ty::from(#acc)
+                <#ty as ::core::convert::From<_>>::from(#acc)
             }
         }));
     }
