@@ -1,7 +1,6 @@
-//! A tiny crate for chain type converter. There is only one macro `convert-chian` in it. You can use it to directly
-//! convert an expression or create a closure for the convert.
+//! A tiny crate for chain type converter. There is only one macro `convert_chian` in it
 //!
-//! type relation
+//! Assuming there are 3 sturct with following relationship.
 //! ```rust
 //! struct A;
 //! struct B;
@@ -11,17 +10,25 @@
 //! impl From<C> for B { ... }
 //! ```
 //!
-//! directly convert:
-//! ```rust
-//! let c = C;
-//! let a = convert_chain!(c; B, A);
-//! ```
+//! You can use the macro to directly convert an expression or create a closure for the convert.
 //!
-//! create a closure:
+//! + Directly convert
+//!     ```rust
+//!     let a = A;
+//!     let C = convert_chain!(c; B, C);
+//!     ```
+//!
+//! + Create a closure
+//!     ```rust
+//!     let a = A;
+//!     let f = convert_chain!(B, C);
+//!     let c = f(C);
+//!     ```
+//!
+//! Both of the above methods are equivalent to
 //! ```rust
-//! let c = C;
-//! let f = convert_chain!(B, A);
-//! let a = f(c);
+//! let a = A;
+//! let c = C::from(B::from(a));
 //! ```
 
 use proc_macro2::TokenStream;
