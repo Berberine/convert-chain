@@ -34,7 +34,7 @@
 //! Both of the above methods are equivalent to
 //! ```rust
 //! let c = C;
-//! let a = A::from(A::from(c));
+//! let a = A::from(B::from(c));
 //! ```
 
 use proc_macro2::TokenStream;

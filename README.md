@@ -34,5 +34,5 @@ You can use the macro to directly convert an expression or create a closure for 
 Both of the above methods are equivalent to
 ```rust
 let c = C;
-let a = A::from(A::from(c));
+let a = A::from(B::from(c));
 ```
